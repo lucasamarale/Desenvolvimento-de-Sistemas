@@ -12,12 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $titulo    = $_POST['titulo'];
     $descricao = $_POST['descricao'];
 
-    $sql  = "INSERT INTO tarefas (titulo, descricao, usuario_id) VALUES (:titulo, :descricao, :usuario_id)";
-    $stmt = $conexao->prepare($sql);
-    $stmt->bindParam(':titulo', $titulo);
-    $stmt->bindParam(':descricao', $descricao);
-    $stmt->bindParam(':usuario_id', $_SESSION['usuario_id']);
-    $stmt->execute();
+    $sql  = "INSERT INTO tarefas (titulo, descricao, usuario_id) VALUES (?, ?, ?)";
+            $stmt = $conexao->prepare($sql);
+            $stmt->execute([$titulo, $descricao, $_SESSION['usuario_id']]);
 
     header('Location: index.php');
     exit;
